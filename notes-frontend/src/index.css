@@ -1,0 +1,241 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  color: #18211f;
+  background: #f7f8f3;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+button {
+  border: 0;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  color: #ffffff;
+  background: #236b5b;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+a {
+  color: #236b5b;
+  font-weight: 700;
+}
+
+input,
+textarea {
+  width: 100%;
+  border: 1px solid #c9d3cd;
+  border-radius: 8px;
+  padding: 0.8rem 0.9rem;
+  color: #18211f;
+  background: #ffffff;
+}
+
+textarea {
+  min-height: 140px;
+  resize: vertical;
+}
+
+label {
+  display: grid;
+  gap: 0.45rem;
+  color: #37423f;
+  font-weight: 700;
+}
+
+.auth-page {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 2rem 1rem;
+}
+
+.auth-form {
+  width: min(100%, 420px);
+  display: grid;
+  gap: 1rem;
+  padding: 2rem;
+  border: 1px solid #dde3de;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 18px 45px rgba(24, 33, 31, 0.08);
+}
+
+.auth-form h1,
+.notes-panel h1 {
+  margin: 0;
+}
+
+.auth-form p,
+.notes-panel p {
+  margin: 0;
+  color: #5c6964;
+}
+
+.auth-link {
+  text-align: center;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem clamp(1rem, 4vw, 3rem);
+  border-bottom: 1px solid #dde3de;
+  background: #ffffff;
+}
+
+.brand {
+  color: #18211f;
+  text-decoration: none;
+  font-size: 1.2rem;
+}
+
+.notes-page {
+  width: min(1120px, calc(100% - 2rem));
+  margin: 0 auto;
+  padding: 2rem 0 3rem;
+}
+
+.notes-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(300px, 1.2fr);
+  gap: 2rem;
+  align-items: start;
+  padding-bottom: 2rem;
+}
+
+.eyebrow {
+  color: #8a4a32;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.note-form {
+  display: grid;
+  gap: 1rem;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.checkbox-label input {
+  width: auto;
+}
+
+.form-actions,
+.note-actions,
+.pagination {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.notes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+.note-card {
+  display: grid;
+  align-content: space-between;
+  gap: 1rem;
+  min-height: 220px;
+  border: 1px solid #dde3de;
+  border-radius: 8px;
+  padding: 1rem;
+  background: #ffffff;
+}
+
+.note-card-pinned {
+  border-color: #d8864b;
+}
+
+.note-card-header {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.note-card h3,
+.note-card p {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.note-card p {
+  color: #4d5b56;
+}
+
+.pin-label {
+  border-radius: 999px;
+  padding: 0.25rem 0.55rem;
+  color: #6f351f;
+  background: #ffe6cc;
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+
+.secondary-button {
+  color: #236b5b;
+  border: 1px solid #a9c2ba;
+  background: #ffffff;
+}
+
+.danger-button {
+  background: #b33a3a;
+}
+
+.status-message,
+.empty-state {
+  margin: 0 0 1rem;
+  color: #4d5b56;
+  font-weight: 700;
+}
+
+.error-message {
+  border-radius: 8px;
+  padding: 0.75rem;
+  color: #8a1f1f;
+  background: #ffe3e3;
+}
+
+.pagination {
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+@media (max-width: 760px) {
+  .notes-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .auth-form {
+    padding: 1.25rem;
+  }
+}

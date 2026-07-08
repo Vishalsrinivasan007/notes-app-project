@@ -1,0 +1,11 @@
+node_modules
+dist
+.env
+*.log
+
+backend/node_modules
+backend/.env
+
+notes-frontend/node_modules
+notes-frontend/dist
+notes-frontend/.env
