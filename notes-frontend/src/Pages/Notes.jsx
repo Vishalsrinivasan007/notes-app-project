@@ -16,6 +16,7 @@ function Notes(){
   const [totalPages,setTotalPages] = useState(1);
   const [form,setForm] = useState(initialForm);
   const [editingId,setEditingId] = useState(null);
+  const [pendingDeleteId,setPendingDeleteId] = useState(null);
   const [message,setMessage] = useState("");
   const [loading,setLoading] = useState(false);
 
@@ -76,12 +77,24 @@ function Notes(){
   }
 
   const deleteNote = async (id) => {
+    setPendingDeleteId(id);
+  }
+
+  const confirmDelete = async () => {
     try {
-      await API.delete(`/notes/${id}`);
+      await API.delete(`/notes/${pendingDeleteId}`);
+      if (editingId === pendingDeleteId) {
+        resetForm();
+      }
+      setPendingDeleteId(null);
       fetchNotes();
     } catch (err) {
       setMessage(err.response?.data?.message || "Could not delete note");
     }
+  }
+
+  const cancelDelete = () => {
+    setPendingDeleteId(null);
   }
 
   const updateNote = async (note) => {
@@ -206,6 +219,25 @@ function Notes(){
             Next
           </button>
         </div>
+
+        {pendingDeleteId && (
+          <div className="modal-backdrop" role="presentation">
+            <div className="confirm-dialog" role="dialog" aria-modal="true" aria-labelledby="delete-title">
+              <h2 id="delete-title">Delete note?</h2>
+              <p>This note will be permanently removed.</p>
+
+              <div className="confirm-actions">
+                <button className="danger-button" type="button" onClick={confirmDelete}>
+                  Delete
+                </button>
+
+                <button className="secondary-button" type="button" onClick={cancelDelete}>
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </main>
     </>
   )
