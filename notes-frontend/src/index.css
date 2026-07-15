@@ -154,6 +154,14 @@ label {
   gap: 0.75rem;
 }
 
+.notes-toolbar {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.75rem;
+  align-items: end;
+  margin-bottom: 1rem;
+}
+
 .notes-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -271,5 +279,9 @@ label {
 
   .auth-form {
     padding: 1.25rem;
+  }
+
+  .notes-toolbar {
+    grid-template-columns: 1fr;
   }
 }

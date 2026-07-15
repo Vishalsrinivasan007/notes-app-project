@@ -17,6 +17,7 @@ function Notes(){
   const [form,setForm] = useState(initialForm);
   const [editingId,setEditingId] = useState(null);
   const [pendingDeleteId,setPendingDeleteId] = useState(null);
+  const [search,setSearch] = useState("");
   const [message,setMessage] = useState("");
   const [loading,setLoading] = useState(false);
 
@@ -26,7 +27,7 @@ function Notes(){
     setMessage("")
 
     try {
-      let res =await API.get(`/notes?page=${page}&limit=5`)
+      let res =await API.get(`/notes?page=${page}&limit=5&search=${encodeURIComponent(search)}`)
       setNotes(res.data.data)
       setTotalPages(res.data.totalPages || 1)
     } catch (error) {
@@ -39,7 +40,7 @@ function Notes(){
 
   useEffect(()=>{
     fetchNotes();
-  },[page]);
+  },[page,search]);
 
 
 
@@ -51,7 +52,17 @@ function Notes(){
       [name]: type === "checkbox" ? checked : value,
     }));
   };
-   
+
+  const handleSearchChange = (e) => {
+    setSearch(e.target.value);
+    setPage(1);
+  };
+
+  const clearSearch = () => {
+    setSearch("");
+    setPage(1);
+  };
+
 
   const resetForm = () => {
     setForm(initialForm);
@@ -176,6 +187,23 @@ function Notes(){
               )}
             </div> 
           </form>
+        </section>
+
+        <section className="notes-toolbar" aria-label="Note search">
+          <label>
+            Search notes
+            <input
+              value={search}
+              placeholder="Search by title or content"
+              onChange={handleSearchChange}
+            />
+          </label>
+
+          {search && (
+            <button className="secondary-button" type="button" onClick={clearSearch}>
+              Clear
+            </button>
+          )}
         </section>
 
         {message && <p className="status-message">{message}</p>}

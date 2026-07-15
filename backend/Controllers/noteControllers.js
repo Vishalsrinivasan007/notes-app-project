@@ -5,9 +5,21 @@ export const getNotes=async(req,res)=>{
     let page=parseInt(req.query.page) || 1
     let limit=parseInt(req.query.limit) || 5
     let skip=(page-1)*limit
+    let search=req.query.search?.trim() || ""
 
-    let total=await Note.countDocuments({user:req.user._id})
-    let notes=await Note.find({user:req.user._id}).sort({isPinned:-1,createdAt:-1}).skip(skip).limit(limit)
+    let query={user:req.user._id}
+
+    if(search){
+      let escapedSearch=search.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")
+
+      query.$or=[
+        {title:{$regex:escapedSearch,$options:"i"}},
+        {content:{$regex:escapedSearch,$options:"i"}}
+      ]
+    }
+
+    let total=await Note.countDocuments(query)
+    let notes=await Note.find(query).sort({isPinned:-1,createdAt:-1}).skip(skip).limit(limit)
     res.status(200).json({
       success:true,
       page,
@@ -115,3 +127,4 @@ export const deleteNote = async (req, res) => {
     });
   }
 };
+
