@@ -31,6 +31,7 @@ export const getNotes=async(req,res)=>{
   }
 }
 
+
 export const createNote=async(req,res)=>{
   try {
     let {title,content,isPinned}=req.body
