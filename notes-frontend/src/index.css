@@ -252,6 +252,33 @@ label {
   padding: 1rem;
 }
 
+.filter-tabs {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.filter-tab {
+  color: #4f5f5a;
+  border: 1px solid #d4dfdb;
+  background: rgba(255, 255, 255, 0.72);
+  box-shadow: none;
+}
+
+.filter-tab:hover:not(:disabled) {
+  color: #226c5d;
+  background: #f4faf7;
+  box-shadow: 0 10px 22px rgba(23, 32, 29, 0.08);
+}
+
+.active-filter {
+  color: #ffffff;
+  border-color: transparent;
+  background: linear-gradient(135deg, #226c5d, #173f39);
+  box-shadow: 0 10px 22px rgba(34, 108, 93, 0.18);
+}
+
 .notes-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));

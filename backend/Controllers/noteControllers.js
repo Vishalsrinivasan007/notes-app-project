@@ -6,8 +6,17 @@ export const getNotes=async(req,res)=>{
     let limit=parseInt(req.query.limit) || 5
     let skip=(page-1)*limit
     let search=req.query.search?.trim() || ""
+    let filter=req.query.filter || "all"
 
     let query={user:req.user._id}
+
+    if(filter==="pinned"){
+      query.isPinned=true
+    }
+
+    if(filter==="unpinned"){
+      query.isPinned=false
+    }
 
     if(search){
       let escapedSearch=search.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")

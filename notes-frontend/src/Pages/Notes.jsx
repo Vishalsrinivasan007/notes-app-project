@@ -18,6 +18,7 @@ function Notes(){
   const [editingId,setEditingId] = useState(null);
   const [pendingDeleteId,setPendingDeleteId] = useState(null);
   const [search,setSearch] = useState("");
+  const [filter,setFilter] = useState("all");
   const [message,setMessage] = useState("");
   const [loading,setLoading] = useState(false);
 
@@ -27,7 +28,7 @@ function Notes(){
     setMessage("")
 
     try {
-      let res =await API.get(`/notes?page=${page}&limit=5&search=${encodeURIComponent(search)}`)
+      let res =await API.get(`/notes?page=${page}&limit=5&search=${encodeURIComponent(search)}&filter=${filter}`)
       setNotes(res.data.data)
       setTotalPages(res.data.totalPages || 1)
     } catch (error) {
@@ -38,9 +39,11 @@ function Notes(){
     }
   }
 
+
+
   useEffect(()=>{
     fetchNotes();
-  },[page,search]);
+  },[page,search,filter]);
 
 
 
@@ -63,6 +66,10 @@ function Notes(){
     setPage(1);
   };
 
+  const handleFilterChange=(nextFilter)=>{
+    setFilter(nextFilter)
+    setPage(1)
+  }
 
   const resetForm = () => {
     setForm(initialForm);
@@ -116,8 +123,6 @@ function Notes(){
       isPinned: note.isPinned,
     });
   }
-
-
 
   const togglePin = async (note) => {
     try {
@@ -204,6 +209,33 @@ function Notes(){
               Clear
             </button>
           )}
+
+          <div className="filter-tabs" aria-label="Filter notes">
+            <button
+              className={filter === "all" ? "filter-tab active-filter" : "filter-tab"}
+              type="button"
+              onClick={() => handleFilterChange("all")}
+            >
+              All
+            </button>
+
+            <button
+              className={filter === "pinned" ? "filter-tab active-filter" : "filter-tab"}
+              type="button"
+              onClick={() => handleFilterChange("pinned")}
+            >
+              Pinned
+            </button>
+
+            <button
+              className={filter === "unpinned" ? "filter-tab active-filter" : "filter-tab"}
+              type="button"
+              onClick={() => handleFilterChange("unpinned")}
+            >
+              Unpinned
+            </button>
+          </div>
+       
         </section>
 
         {message && <p className="status-message">{message}</p>}
