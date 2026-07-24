@@ -44,6 +44,8 @@ export const getNotes=async(req,res)=>{
 export const createNote=async(req,res)=>{
   try {
     let {title,content,isPinned}=req.body
+    title=title?.trim()
+    content=content?.trim()
     if(!title || !content){
       return res.status(400).json({success:false,message:'All fields required'})
     }
@@ -61,12 +63,16 @@ export const createNote=async(req,res)=>{
 export const updateNote = async (req, res) => {
   try {
     const { title, content, isPinned } = req.body;
+    const updateData = {};
 
     if (title !== undefined && title.trim() === "") {
       return res.status(400).json({
         success: false,
         message: "Title cannot be empty"
       });
+    }
+    if (title !== undefined) {
+      updateData.title = title.trim();
     }
 
     if (content !== undefined && content.trim() === "") {
@@ -75,6 +81,9 @@ export const updateNote = async (req, res) => {
         message: "Content cannot be empty"
       });
     }
+    if (content !== undefined) {
+      updateData.content = content.trim();
+    }
 
     if (isPinned !== undefined && typeof isPinned !== "boolean") {
       return res.status(400).json({
@@ -82,10 +91,13 @@ export const updateNote = async (req, res) => {
         message: "Value must be a boolean"
       });
     }
+    if (isPinned !== undefined) {
+      updateData.isPinned = isPinned;
+    }
 
     const note = await Note.findOneAndUpdate(
       { _id: req.params.id, user: req.user._id },
-      req.body,
+      updateData,
       { new: true, runValidators: true }
     );
 

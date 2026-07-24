@@ -80,15 +80,29 @@ function Notes(){
     e.preventDefault();
     setMessage("");
 
+    const cleanedForm = {
+      ...form,
+      title: form.title.trim(),
+      content: form.content.trim(),
+    };
+
+    if (!cleanedForm.title || !cleanedForm.content) {
+      setMessage("Title and content are required");
+      return;
+    }
+
     try {
       if (editingId) {
-        await API.put(`/notes/${editingId}`, form);
+        await API.put(`/notes/${editingId}`, cleanedForm);
+        resetForm();
+        await fetchNotes();
+        setMessage("Note updated successfully");
       } else {
-        await API.post("/notes", form);
+        await API.post("/notes", cleanedForm);
+        resetForm();
+        await fetchNotes();
+        setMessage("Note created successfully");
       }
-
-      resetForm();
-      fetchNotes();
     } catch (err) {
       setMessage(err.response?.data?.message || "Could not save note");
     }
@@ -105,7 +119,8 @@ function Notes(){
         resetForm();
       }
       setPendingDeleteId(null);
-      fetchNotes();
+      await fetchNotes();
+      setMessage("Note deleted successfully");
     } catch (err) {
       setMessage(err.response?.data?.message || "Could not delete note");
     }
@@ -130,7 +145,8 @@ function Notes(){
         isPinned:!note.isPinned
       });
 
-      fetchNotes();
+      await fetchNotes();
+      setMessage(note.isPinned ? "Note unpinned" : "Note pinned");
     } catch (err) {
       setMessage(err.response?.data?.message || "Could not update note");
     }

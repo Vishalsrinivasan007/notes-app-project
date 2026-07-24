@@ -15,12 +15,26 @@ function Register(){
   const handleSubmit = async (e)=>{
     e.preventDefault();
     setError("");
+
+    const trimmedName = name.trim();
+    const trimmedEmail = email.trim();
+
+    if (!trimmedName || !trimmedEmail || !password) {
+      setError("All fields are required");
+      return;
+    }
+
+    if (password.length < 6) {
+      setError("Password must be at least 6 characters");
+      return;
+    }
+
     setLoading(true);
 
     try {
       const res = await API.post("/auth/register",{
-        name,
-        email,
+        name: trimmedName,
+        email: trimmedEmail,
         password
       });
 
@@ -92,5 +106,4 @@ function Register(){
 }
 
 export default Register;
-
 

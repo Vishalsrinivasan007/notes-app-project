@@ -14,11 +14,19 @@ function Login(){
   const handleSubmit = async (e)=>{
     e.preventDefault();
     setError("");
+
+    const trimmedEmail = email.trim();
+
+    if (!trimmedEmail || !password) {
+      setError("Email and password are required");
+      return;
+    }
+
     setLoading(true);
 
     try {
       const res = await API.post("/auth/login",{
-        email,
+        email: trimmedEmail,
         password
       });
 

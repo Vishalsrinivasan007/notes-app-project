@@ -9,8 +9,16 @@ function generateToken(id){
 export const registerUser=async(req,res)=>{
     try {
         let {name,email,password}=req.body;
+        name=name?.trim()
+        email=email?.trim().toLowerCase()
         if(!name || !email || !password){
             return res.status(400).json({success:false,message:"All fields required"})
+        }
+        if(!/^\S+@\S+\.\S+$/.test(email)){
+            return res.status(400).json({success:false,message:"Please enter a valid email"})
+        }
+        if(password.length<6){
+            return res.status(400).json({success:false,message:"Password must be at least 6 characters"})
         }
         let exist=await User.findOne({email})
         if(exist){
@@ -32,6 +40,7 @@ export const registerUser=async(req,res)=>{
 export const loginUser=async(req,res)=>{
     try {
         let {email,password}=req.body;
+        email=email?.trim().toLowerCase()
         if(!email || !password){
             return res.status(400).json({success:false,message:'All fields required'})
         }
