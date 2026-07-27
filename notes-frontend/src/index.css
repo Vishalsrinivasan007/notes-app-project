@@ -171,6 +171,23 @@ label {
   font-weight: 900;
 }
 
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.85rem;
+}
+
+.user-greeting {
+  max-width: 42vw;
+  color: #4f5f5a;
+  font-size: 0.92rem;
+  font-weight: 800;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .notes-page {
   position: relative;
   width: min(1120px, calc(100% - 2rem));
@@ -448,6 +465,20 @@ label {
 
   .notes-toolbar {
     grid-template-columns: 1fr;
+  }
+
+  .navbar {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .navbar-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .user-greeting {
+    max-width: min(62vw, 18rem);
   }
 
   .note-actions,
