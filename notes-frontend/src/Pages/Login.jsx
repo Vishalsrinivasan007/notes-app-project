@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import API from "../services/api";
 
@@ -10,6 +10,15 @@ function Login(){
   const [loading,setLoading] = useState(false);
 
   const navigate = useNavigate();
+
+  useEffect(()=>{
+    const sessionMessage = localStorage.getItem("sessionMessage");
+
+    if (sessionMessage) {
+      setError(sessionMessage);
+      localStorage.removeItem("sessionMessage");
+    }
+  },[]);
 
   const handleSubmit = async (e)=>{
     e.preventDefault();
